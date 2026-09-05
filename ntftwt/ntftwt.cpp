@@ -7,13 +7,17 @@
 #include "constants.h"
 #include "exit_codes.h"
 
-int main(int argc, char* argv[])
-{
-	std::cout << "ntftwt - " << VERSION << std::endl;
+int main(int argc, char* argv[]) {
 
-    handle_args(argc, argv);
+	std::cout << "ntftwt" << std::endl;
 
-    return EXIT_CODES.SUCCESS;
+	// arguments for main entry point
+	if (int i = handle_args(argc, argv))
+		return i;
+
+	//std::cout << "Exit Code: " << EXIT_CODES.SUCCESS << std::endl;
+
+	return EXIT_CODES.SUCCESS;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

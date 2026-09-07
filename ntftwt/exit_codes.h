@@ -7,6 +7,9 @@ struct exit_codes_t {
 	// commands
 	static constexpr int32_t NO_ARGS = 0x00000002;
 	static constexpr int32_t INVALID_ARGS = 0x00000003;
+	static  constexpr int32_t IN_FI_ERROR = 0x00000004;
+	// cpu based
+	static constexpr int32_t AVX2_UNSUPPORTED = 0x00000005;
 	// reserved
 	static constexpr int32_t FUCK = 0x7FFFFFFF;
 };

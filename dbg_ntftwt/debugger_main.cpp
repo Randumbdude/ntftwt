@@ -25,7 +25,20 @@ int main(int argc, char* argv[])
 	std::string args;
 	std::string pg_path;
 	if (argc > 1) {
-		// a config file has been specified, load it
+		// a config file has been specified, check existence and optionally create it
+		std::ifstream infile(argv[1]);
+		if (!infile) {
+			std::cout << "Could not find config file, would you like to create one? (y/n): ";
+			char resp = '\0';
+			std::cin >> resp;
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			if (resp != 'y' && resp != 'Y') {
+				return 1;
+			}
+			// user chose to create the file; proceed to construct Config which will save when needed
+		}
+
+		// load (or create) the config
 		Config config(argv[1]);
 		pg_path = config.get("program_path");
 		args = config.get("program_args");
@@ -76,11 +89,11 @@ int main(int argc, char* argv[])
 	}
 
 	std::cout << "Starting ntftwt..." << std::endl;
-	std::cout << "<======================================================================================================================>" << std::endl;
+	std::cout << "<==============================================================================>" << std::endl;
 
 	std::string command = pg_path + " " + args;
 	int error_level = std::system(command.c_str());
-	std::cout << "<======================================================================================================================>" << std::endl;
+	std::cout << "<==============================================================================>" << std::endl;
 	std::cout << "Exit Code: 0x"
 		<< std::uppercase
 		<< std::setfill('0')

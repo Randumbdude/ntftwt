@@ -1,2 +1,2 @@
 #pragma once
-static char VERSION[8] = "0.0.0.0";
+static const char VERSION[8] = "0.0.0.0";

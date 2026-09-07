@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\avx2">
+      <UniqueIdentifier>{8d38ca8d-9d14-4197-a3ec-ebfae63d73c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\avx2">
+      <UniqueIdentifier>{728699cd-90f2-47e4-9463-9ca2e7656641}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ntftwt.cpp">
@@ -20,6 +26,9 @@
     </ClCompile>
     <ClCompile Include="args.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="avx_t.cpp">
+      <Filter>Source Files\avx2</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -31,6 +40,9 @@
     </ClInclude>
     <ClInclude Include="constants.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="avx_t.h">
+      <Filter>Header Files\avx2</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

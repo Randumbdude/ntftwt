@@ -6,6 +6,7 @@
 #include "constants.h"
 #include "exit_codes.h"
 #include "avx_t.h"
+#include "rayl_t.h"
 
 int main(int argc, char* argv[]) {
 
@@ -26,6 +27,11 @@ int main(int argc, char* argv[]) {
 	// prompt user to run the AVX2 benchmark
 	if (arg_yes_no("Would you like to run the AVX2 benchmark?"))
 		if (int32_t i = avx2_benchmark(100000000))
+			return i;
+
+	// prompt user to run the Raylib graphics test
+	if (arg_yes_no("Would you like to run the Raylib graphics test?"))
+		if (int32_t i = raylib_test())
 			return i;
 
 	// return

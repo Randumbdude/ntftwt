@@ -19,6 +19,12 @@
     <Filter Include="Header Files\avx2">
       <UniqueIdentifier>{728699cd-90f2-47e4-9463-9ca2e7656641}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\graphics">
+      <UniqueIdentifier>{ca0729b7-e344-41ca-a900-7b85f14a5e5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\graphics">
+      <UniqueIdentifier>{bf3b09c7-2c18-4dd3-8140-773f5f160784}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ntftwt.cpp">
@@ -29,6 +35,9 @@
     </ClCompile>
     <ClCompile Include="avx_t.cpp">
       <Filter>Source Files\avx2</Filter>
+    </ClCompile>
+    <ClCompile Include="rayl_t.cpp">
+      <Filter>Source Files\graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -43,6 +52,9 @@
     </ClInclude>
     <ClInclude Include="avx_t.h">
       <Filter>Header Files\avx2</Filter>
+    </ClInclude>
+    <ClInclude Include="rayl_t.h">
+      <Filter>Header Files\graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

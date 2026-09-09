@@ -126,10 +126,13 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/arch:AVX2 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>C:\Users\myser\source\repos\ntftwt\raylib-master\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Users\myser\source\repos\ntftwt\raylib-master\build\raylib\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>raylib.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Manifest>
       <EnableSegmentHeap>true</EnableSegmentHeap>
@@ -146,10 +149,13 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalOptions>/arch:AVX2 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>C:\Users\myser\source\repos\ntftwt\raylib-master\src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Users\myser\source\repos\ntftwt\raylib-master\build\raylib\Debug</AdditionalLibraryDirectories>
+      <AdditionalDependencies>raylib.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Manifest>
       <EnableSegmentHeap>true</EnableSegmentHeap>
@@ -159,12 +165,19 @@
     <ClCompile Include="args.cpp" />
     <ClCompile Include="avx_t.cpp" />
     <ClCompile Include="ntftwt.cpp" />
+    <ClCompile Include="rayl_t.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="args.h" />
     <ClInclude Include="avx_t.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="exit_codes.h" />
+    <ClInclude Include="rayl_t.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\raylib-master\build\raylib\raylib.vcxproj">
+      <Project>{3d030a19-ecfc-3c22-949c-9405d67ad872}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

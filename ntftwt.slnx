@@ -5,4 +5,7 @@
   </Configurations>
   <Project Path="dbg_ntftwt/dbg_ntftwt.vcxproj" Id="a236bed5-a847-4ccb-a6dc-19515d17bbb9" />
   <Project Path="ntftwt/ntftwt.vcxproj" Id="c949b14d-8788-4def-98fd-e52694d88188" />
+  <Project Path="raylib-master/build/raylib/raylib.vcxproj" Id="3d030a19-ecfc-3c22-949c-9405d67ad872">
+    <Platform Project="x64" />
+  </Project>
 </Solution>

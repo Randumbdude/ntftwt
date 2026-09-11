@@ -2,11 +2,16 @@
 // ntftwt.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 #include <iostream>
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#include <Windows.h>
+#include <string>
 #include "args.h"
-#include "constants.h"
+#include "globals.h"
 #include "exit_codes.h"
-#include "avx_t.h"
-#include "rayl_t.h"
+#include "benchmarks.h"
+#include "ipc_cmd.h"
 
 int main(int argc, char* argv[]) {
 
@@ -34,6 +39,28 @@ int main(int argc, char* argv[]) {
 		if (int32_t i = raylib_test())
 			return i;
 
+	// now we check if the process is parentized
+	if (is_parentized) {
+		std::cout << "Process is parentized." << std::endl;
+		run_server();
+	}
+	else {
+		std::cout << "Process is not parentized." << std::endl;
+		std::cout << "Checking existance of parentized instance..." << std::endl;
+		if (check_parentized()) {
+			std::cout << "No parentized instance found." << std::endl;
+		}
+		else {
+			std::cout << "Enter command code: "; 
+			char resp = '\0'; 
+			std::cin >> resp; 
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
+			char message[64]{}; 
+			std::cout << "Enter message to send: "; 
+			std::cin.getline(message, sizeof(message)); 
+			send_message((resp - '0'), message);
+		}
+	}
 	// return
 	return EXIT_CODES.SUCCESS;
 }

@@ -1,4 +1,4 @@
-#include "avx_t.h"
+#include "benchmarks.h"
 #include <iostream>
 #include <immintrin.h>
 #include <chrono>

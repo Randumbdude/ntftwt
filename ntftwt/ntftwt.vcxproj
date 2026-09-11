@@ -164,15 +164,18 @@
   <ItemGroup>
     <ClCompile Include="args.cpp" />
     <ClCompile Include="avx_t.cpp" />
+    <ClCompile Include="ipc_args.cpp" />
+    <ClCompile Include="ipc_args.h" />
+    <ClCompile Include="ipc_cmd.cpp" />
     <ClCompile Include="ntftwt.cpp" />
     <ClCompile Include="rayl_t.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="args.h" />
-    <ClInclude Include="avx_t.h" />
-    <ClInclude Include="constants.h" />
+    <ClInclude Include="benchmarks.h" />
+    <ClInclude Include="globals.h" />
     <ClInclude Include="exit_codes.h" />
-    <ClInclude Include="rayl_t.h" />
+    <ClInclude Include="ipc_cmd.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\raylib-master\build\raylib\raylib.vcxproj">

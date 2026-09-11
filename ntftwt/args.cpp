@@ -1,14 +1,27 @@
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
 #include "args.h"
 #include <iostream>
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <limits>
 #include "exit_codes.h"
-#include "constants.h"
-#include "avx_t.h"
+#include "globals.h"
+#include "benchmarks.h"
+
+bool is_parentized = false;
+HANDLE process_mutex = nullptr;
 
 // flags
 static bool next_input = 0;
+
+void cleanup() {
+	// Perform any necessary cleanup tasks here
+	std::cout << "Cleaning up before exit..." << std::endl;
+	CloseHandle(process_mutex);
+}
 
 static int32_t input_file_command() {
 	std::cout << "Preparing to read input file..." << std::endl;
@@ -115,6 +128,7 @@ static int32_t help_command() {
 	std::cout << "  --help,      Show this help message\n";
 	std::cout << "  --version,   Show version information\n";
 	std::cout << "  -i <input file>,   Specify an input file\n";
+	std::cout << "  -p,           Parentize process\n";
 	exit(EXIT_CODES.SUCCESS);
 	return EXIT_CODES.SUCCESS;
 }
@@ -123,6 +137,46 @@ static int32_t version_command() {
 	std::cout << "ntftwt version: " << VERSION << std::endl;
 	exit(EXIT_CODES.SUCCESS);
 	return EXIT_CODES.SUCCESS;
+}
+
+static int32_t parentize_command() {
+
+	// setup mutex for this instance (or try to)
+	process_mutex = CreateMutexA(
+		nullptr,
+		TRUE,
+		"ntftwt_parentized"
+	);
+
+	if (process_mutex == nullptr)
+	{
+		std::cerr << "Failed to create mutex\n";
+		return EXIT_CODES.MUTEX_FAILED;
+	}
+
+	if (GetLastError() == ERROR_ALREADY_EXISTS)
+	{
+		std::cout << "Another parent instance is already running!\n";
+		CloseHandle(process_mutex);
+		return EXIT_CODES.PARENT_EXISTS;
+	}
+
+	std::cout << "This is the first instance.\n";
+
+	is_parentized = true;
+	atexit(cleanup);
+	std::cout << "Successfully parentized the process." << std::endl;
+	return EXIT_CODES.SUCCESS;
+}
+
+static int32_t castlemania_command() {
+	std::cout << "castlemania has been executed." << std::endl;
+	return EXIT_CODES.SUCCESS;
+}
+
+static int32_t invalid_command() {
+	std::cout << "Invalid command. Use --help for usage information." << std::endl;
+	return EXIT_CODES.INVALID_ARGS;
 }
 
 struct command_t
@@ -136,6 +190,8 @@ command_t commands[] =
 	{ "-i",    input_file_command },
 	{ "--help", help_command },
 	{ "--version", version_command },
+	{"-p", parentize_command },
+	{"--castlemania", castlemania_command }
 };
 
 size_t command_count = sizeof(commands) / sizeof(commands[0]);
@@ -179,6 +235,7 @@ int32_t handle_args(int argc, char* argv[]) {
 		}
 
 		if (!matched) {
+			invalid_command();
 			return EXIT_CODES.INVALID_ARGS;
 		}
 	}

@@ -3,6 +3,8 @@
 #include <iostream> 
 #include "exit_codes.h"
 #include "args.h"
+#include "sha1.h"
+#include "ipc_args.h"
 
 constexpr const char* PIPE_NAME = "\\\\.\\pipe\\ntftwt_IPC";
 
@@ -19,8 +21,13 @@ enum class Command_e : uint32_t {
 	exe_cmd = 4
 };
 
-int32_t execute_command(char* cmd_text) {
+static int32_t execute_command(char* cmd_text) {
 	std::cout << "Executing command: " << cmd_text << std::endl;
+	SHA1 cmd;
+	cmd.update(cmd_text);
+	std::cout << cmd.final() << std::endl;
+	const char* final_cmd = cmd.final().c_str();
+	ipoc_arg(final_cmd);
 	return EXIT_CODES.SUCCESS;
 }
 

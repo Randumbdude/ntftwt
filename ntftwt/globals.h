@@ -3,7 +3,7 @@
 
 // Keep VERSION as a constexpr string literal to avoid static initialization
 // order and multiple-definition issues across translation units.
-constexpr const char* VERSION = "0.0.0.1";
+constexpr const char* VERSION = "0.0.0.1a";
 
 // Avoid including Windows.h in this header to prevent symbol collisions
 // (e.g., DrawText, ShowCursor) when other libraries like raylib are used.

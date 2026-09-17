@@ -32,7 +32,6 @@ static int32_t input_file_helper(char* argv) {
 	std::cout << "Input file: " << argv << std::endl;
 
 	std::ifstream file(argv);
-
 	if (!file.is_open()) {
 		next_input = false;
 		return EXIT_CODES.IN_FI_ERROR;
@@ -197,16 +196,12 @@ command_t commands[] =
 size_t command_count = sizeof(commands) / sizeof(commands[0]);
 
 int32_t handle_args(int argc, char* argv[]) {
-	//std::cout << "Total arguments received: " << argc << std::endl;
-
 	if (argc == 1) {
 		std::cout << "Usage: ntftwt [options]" << std::endl;
 		return EXIT_CODES.NO_ARGS;
 	}
 
 	for (int i = 1; i < argc; ++i) {
-		//std::cout << "argv[" << i << "]: " << argv[i] << std::endl;
-
 		// catch flags: if a previous option indicated the next argv is data (e.g. -i filename)
 		if (next_input) {
 			int32_t res = input_file_helper(argv[i]);

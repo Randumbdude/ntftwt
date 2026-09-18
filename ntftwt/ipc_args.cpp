@@ -1,6 +1,6 @@
-#include "ipc_args.h"
-#include <iostream>
+#include "pch.h"
 #include <Windows.h>
+#include "ipc_args.h"
 #include "sha1.h"
 
 #define ID_CANCEL 1001

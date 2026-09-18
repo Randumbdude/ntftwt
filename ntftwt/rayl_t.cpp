@@ -1,11 +1,11 @@
+#include "pch.h"
 #include "benchmarks.h"
-#include <iostream>
 #include <string>
 #include "raylib.h"
 #include "globals.h"
 
 int32_t raylib_test() {
-	std::cout << "Starting raylib test..." << std::endl;
+    printf("Starting raylib test...\n");
 
     // title the window
     std::string window_title = std::string("ntftwt_v_") + VERSION;
@@ -41,7 +41,7 @@ int32_t raylib_test() {
     // Close the window and clean up
     CloseWindow();
 
-	std::cout << "Raylib test completed." << std::endl;
+    printf("Raylib test completed.\n");
 
 	return 0;
 }

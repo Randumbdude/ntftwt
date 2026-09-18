@@ -1,6 +1,8 @@
 #ifndef NOMINMAX
 #define NOMINMAX
 #endif
+#include "pch.h"
+#include <Windows.h>
 #include "args.h"
 #include <iostream>
 #include <string>
@@ -19,17 +21,17 @@ static bool next_input = 0;
 
 void cleanup() {
 	// Perform any necessary cleanup tasks here
-	std::cout << "Cleaning up before exit..." << std::endl;
+	printf("Cleaning up before exit...\n");
 	CloseHandle(process_mutex);
 }
 
 static int32_t input_file_command() {
-	std::cout << "Preparing to read input file..." << std::endl;
+	printf("Preparing to read input file...\n");
 	next_input = true;
 	return EXIT_CODES.SUCCESS;
 }
 static int32_t input_file_helper(char* argv) {
-	std::cout << "Input file: " << argv << std::endl;
+	printf("Input file: %s\n", argv);
 
 	std::ifstream file(argv);
 	if (!file.is_open()) {
@@ -107,15 +109,15 @@ static int32_t input_file_helper(char* argv) {
 
 	file.close();
 
-	std::cout << "Array A: ";
+	printf("Array A: ");
 	for (int i = 0; i < 8; ++i)
-		std::cout << avx_t_a[i] << " ";
+		printf("%f ", avx_t_a[i]);
 
-	std::cout << "\nArray B: ";
+	printf("\nArray B: ");
 	for (int i = 0; i < 8; ++i)
-		std::cout << avx_t_b[i] << " ";
+		printf("%f ", avx_t_b[i]);
 
-	std::cout << std::endl;
+	printf("\n");
 
 	next_input = false;
 	return EXIT_CODES.SUCCESS;
@@ -235,12 +237,4 @@ int32_t handle_args(int argc, char* argv[]) {
 		}
 	}
 	return EXIT_CODES.SUCCESS;
-}
-
-int32_t arg_yes_no(const char* prompt) {
-	std::cout << prompt << " (y/n): ";
-	char resp = '\0';
-	std::cin >> resp;
-	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-	return (resp == 'y' || resp == 'Y') ? 1 : 0;
 }

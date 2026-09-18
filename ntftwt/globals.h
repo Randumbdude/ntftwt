@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <cstdint>
 
 // Keep VERSION as a constexpr string literal to avoid static initialization
 // order and multiple-definition issues across translation units.
@@ -15,3 +16,6 @@ using HANDLE = void*;
 // multiple translation units.
 extern bool is_parentized;
 extern HANDLE process_mutex;
+
+// Here we'll have our global methods from any file.
+int32_t input_yes_no(const char* prompt);

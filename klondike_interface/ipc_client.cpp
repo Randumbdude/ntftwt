@@ -1,84 +1,26 @@
 #include "ipc_client.h"
-
-#include <iostream>
+#include <cstdio>
 #include <cstring>
 
-bool IPCClient::send(
-    Command_e command,
-    int32_t value,
-    const char* text
-)
-{
-    ipc_command message{};
-
-    message._cmd_ = static_cast<uint32_t>(command);
-    message.value = value;
-
-    if (text != nullptr)
-    {
-        strcpy_s(
-            message.text,
-            sizeof(message.text),
-            text
-        );
-    }
-
-    std::cout << "Connecting to IPC pipe..." << std::endl;
-
-    pipe = CreateFileA(
-        PIPE_NAME,
-        GENERIC_WRITE,
-        0,
-        nullptr,
-        OPEN_EXISTING,
-        0,
-        nullptr
-    );
-
-    if (pipe == INVALID_HANDLE_VALUE)
-    {
-        std::cerr
-            << "Could not connect to IPC pipe.\n"
-            << "IPC Error: "
-            << GetLastError()
-            << std::endl;
-
-        return false;
-    }
-
-    DWORD bytesWritten = 0;
-
-    BOOL success = WriteFile(
-        pipe,
-        &message,
-        sizeof(message),
-        &bytesWritten,
-        nullptr
-    );
-
-    if (!success)
-    {
-        std::cerr
-            << "WriteFile failed: "
-            << GetLastError()
-            << std::endl;
-
-        CloseHandle(pipe);
-        pipe = INVALID_HANDLE_VALUE;
-
-        return false;
-    }
-
-    std::cout
-        << "Struct sent successfully.\n"
-        << "Bytes sent: "
-        << bytesWritten
-        << " / "
-        << sizeof(message)
-        << std::endl;
-
-    CloseHandle(pipe);
-    pipe = INVALID_HANDLE_VALUE;
-
-    return bytesWritten == sizeof(message);
+bool IPCClient::send(const ipc_command ipc_cmd) {
+	printf("Connecting to IPC pipe...\n");
+	pipe = CreateFileA(PIPE_NAME, GENERIC_WRITE, 0, nullptr, OPEN_EXISTING, 0, nullptr);
+	if (pipe == INVALID_HANDLE_VALUE)
+	{
+		fprintf(stderr, "Could not connect to IPC pipe.\nIPC Error: %lu\n", GetLastError());
+		return false;
+	}
+	DWORD bytesWritten = 0;
+	BOOL success = WriteFile(pipe, &ipc_cmd, sizeof(ipc_command), &bytesWritten, nullptr);
+	if (!success)
+	{
+		fprintf(stderr, "WriteFile failed: %lu\n", GetLastError());
+		CloseHandle(pipe);
+		pipe = INVALID_HANDLE_VALUE;
+		return false;
+	}
+	printf("Struct sent successfully.\nBytes sent: %lu / %zu\n", bytesWritten, sizeof(ipc_command));
+	CloseHandle(pipe);
+	pipe = INVALID_HANDLE_VALUE;
+	return bytesWritten == sizeof(ipc_command);
 }

@@ -1,10 +1,11 @@
 
 // ntftwt.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
-#include <iostream>
 #ifndef NOMINMAX
 #define NOMINMAX
 #endif
+#include "pch.h"
+#include <iostream>
 #include <Windows.h>
 #include <string>
 #include "args.h"
@@ -30,12 +31,12 @@ int main(int argc, char* argv[]) {
 #endif
 
 	// prompt user to run the AVX2 benchmark
-	if (arg_yes_no("Would you like to run the AVX2 benchmark?"))
+	if (input_yes_no("Would you like to run the AVX2 benchmark?"))
 		if (int32_t i = avx2_benchmark(100000000))
 			return i;
 
 	// prompt user to run the Raylib graphics test
-	if (arg_yes_no("Would you like to run the Raylib graphics test?"))
+	if (input_yes_no("Would you like to run the Raylib graphics test?"))
 		if (int32_t i = raylib_test())
 			return i;
 
@@ -54,15 +55,24 @@ int main(int argc, char* argv[]) {
 			std::cout << "Enter command code: "; 
 			char resp = '\0'; 
 			std::cin >> resp; 
+
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
 			char message[64]{}; 
 			std::cout << "Enter message to send: "; 
 			std::cin.getline(message, sizeof(message)); 
-			send_message((resp - '0'), message);
+			send_message(static_cast<command_e>(resp - '0'), message);
 		}
 	}
 	// return
 	return EXIT_CODES.SUCCESS;
+}
+
+int32_t input_yes_no(const char* prompt) {
+	std::cout << prompt << " (y/n): ";
+	char resp = '\0';
+	std::cin >> resp;
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	return (resp == 'y' || resp == 'Y') ? 1 : 0;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

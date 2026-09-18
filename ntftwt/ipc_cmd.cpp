@@ -1,52 +1,34 @@
+#include "pch.h"
 #include "ipc_cmd.h"
-#include <windows.h> 
-#include <iostream> 
 #include "exit_codes.h"
 #include "args.h"
 #include "sha1.h"
 #include "ipc_args.h"
 
-constexpr const char* PIPE_NAME = "\\\\.\\pipe\\ntftwt_IPC";
-
-struct ipc_command {
-	uint32_t _cmd_;
-	int32_t value;
-	char text[64];
-};
-
-enum class Command_e : uint32_t {
-	ping = 1,
-	set_value = 2,
-	die_hard = 3,
-	exe_cmd = 4
-};
-
 static int32_t execute_command(char* cmd_text) {
-	std::cout << "Executing command: " << cmd_text << std::endl;
+	printf("Executing command: %s\n", cmd_text);
 	SHA1 cmd;
 	cmd.update(cmd_text);
-	std::cout << cmd.final() << std::endl;
+	printf("%s\n", cmd.final().c_str());
 	const char* final_cmd = cmd.final().c_str();
 	ipoc_arg(final_cmd);
 	return EXIT_CODES.SUCCESS;
 }
 
 void run_server() {
-	int32_t myValue = 123;
-	std::cout << "Parentized server running." << std::endl;
-	std::cout << "Value = " << myValue << std::endl;
+	printf("Parentized server running.\n");
 	while (true) {
 		HANDLE pipe = CreateNamedPipeA(PIPE_NAME, PIPE_ACCESS_INBOUND, PIPE_TYPE_BYTE | PIPE_READMODE_BYTE | PIPE_WAIT, 1, sizeof(ipc_command), sizeof(ipc_command), 0, nullptr);
 		if (pipe == INVALID_HANDLE_VALUE) {
-			std::cerr << "CreateNamedPipe failed: " << GetLastError() << std::endl;
+			fprintf(stderr, "CreateNamedPipe failed: %lu\n", GetLastError());
 			return;
 		}
-		std::cout << "Waiting for another instance..." << std::endl;
+		printf("Waiting for another instance...\n");
 		BOOL connected = ConnectNamedPipe(pipe, nullptr);
 		if (!connected) {
 			DWORD error = GetLastError();
 			if (error != ERROR_PIPE_CONNECTED) {
-				std::cerr << "ConnectNamedPipe failed: " << error << std::endl;
+				fprintf(stderr, "ConnectNamedPipe failed: %lu\n", error);
 				CloseHandle(pipe); continue;
 			}
 		}
@@ -55,31 +37,27 @@ void run_server() {
 		BOOL success = ReadFile(pipe, &message, sizeof(message), &bytesRead, nullptr);
 		bool cmd_to_exe = false;
 		if (success && bytesRead == sizeof(message)) {
-			switch (static_cast<Command_e>(message._cmd_)) {
-			case Command_e::ping:
-				std::cout << "Received PING\n";
+			switch (message._cmd_) {
+			case command_e::ping:
+				printf("Received Ping.\n");
 				break;
-			case Command_e::set_value:
-				myValue = message.value;
-				std::cout << "Value changed to " << myValue << "\n";
-				break;
-			case Command_e::die_hard:
-				std::cout << "Received DIE_HARD\n";
+			case command_e::terminate:
+				printf("Received terminate\n");
 				exit(EXIT_CODES.FUCK);
 				break;
-			case Command_e::exe_cmd:
-				std::cout << "Received EXE_CMD\n";
+			case command_e::exe_cmd:
+				printf("Received EXE_CMD\n");
 				cmd_to_exe = true;
 				// Handle exe_cmd logic here
 				break;
-			default: std::cout << "Unknown command\n";
+			default: printf("Unknown command\n");
 				break;
 			}
 
 			if (cmd_to_exe)
 				execute_command(message.text);
 			else
-				std::cout << "Message text: " << message.text << "\n";
+				printf("Message text: %s\n", message.text);
 		}
 		DisconnectNamedPipe(pipe);
 		CloseHandle(pipe);
@@ -97,28 +75,29 @@ int32_t check_parentized() {
 	}
 }
 
-void send_message(uint32_t cmd, const char* text) {
+void send_message(command_e cmd, const char* text) {
+	// initialization of ipc_command struct that will be sent
 	ipc_command command{};
 	command._cmd_ = cmd;
-	command.value = 226;
+	command.pid = GetCurrentProcessId();
 	strcpy_s(command.text, sizeof(command.text), text);
 
-	std::cout << "Connecting to IPC pipe..." << std::endl;
+	// now we connect...
+	printf("Connecting to IPC pipe...\n");
 	HANDLE pipe = CreateFileA(PIPE_NAME, GENERIC_WRITE, 0, nullptr, OPEN_EXISTING, 0, nullptr);
 	if (pipe == INVALID_HANDLE_VALUE) {
-		std::cerr << "Could not connect to IPC pipe." << std::endl;
-		std::cerr << "IPC Error: " << GetLastError() << std::endl;
+		fprintf(stderr, "Could not connect to IPC pipe.\n");
+		fprintf(stderr, "IPC Error: %lu\n", GetLastError());
 		return;
 	}
 	DWORD bytesWritten = 0;
 	BOOL success = WriteFile(pipe, &command, sizeof(command), &bytesWritten, nullptr);
 	if (success) {
-		std::cout << "Struct sent successfully." << std::endl;
-		std::cout << "Bytes sent: " << bytesWritten << std::endl;
+		printf("Struct sent successfully.\n");
+		printf("Bytes sent: %lu\n", bytesWritten);
 	}
 	else {
-		std::cerr << "WriteFile failed: " << GetLastError() << std::endl;
+		fprintf(stderr, "WriteFile failed: %lu\n", GetLastError());
 	}
 	CloseHandle(pipe);
 }
-

@@ -85,8 +85,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <PublicIncludeDirectories>C:\Users\myser\source\repos\ntftwt\raylib-master\src;$(PublicIncludeDirectories)</PublicIncludeDirectories>
-    <IncludePath>C:\Users\myser\source\repos\ntftwt\raylib-master\src;$(IncludePath)</IncludePath>
+    <PublicIncludeDirectories>$(PublicIncludeDirectories)</PublicIncludeDirectories>
+    <IncludePath>$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -130,13 +130,13 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/arch:AVX2 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>C:\Users\myser\OneDrive\Desktop\www.oriley.dev\cloud\riley\repositories\ntftwt\raylib-master\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\myser\source\repos\ntftwt\raylib-master\build\raylib\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>raylib.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Manifest>
       <EnableSegmentHeap>true</EnableSegmentHeap>
@@ -172,8 +172,6 @@
     <ClCompile Include="ipc_args.h" />
     <ClCompile Include="ipc_cmd.cpp" />
     <ClCompile Include="ntftwt.cpp" />
-    <ClCompile Include="pch.cpp" />
-    <ClCompile Include="rayl_t.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="args.h" />
@@ -182,13 +180,7 @@
     <ClInclude Include="exit_codes.h" />
     <ClInclude Include="ipc.h" />
     <ClInclude Include="ipc_cmd.h" />
-    <ClInclude Include="pch.h" />
     <ClInclude Include="sha1.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\raylib-master\build\raylib\raylib.vcxproj">
-      <Project>{3d030a19-ecfc-3c22-949c-9405d67ad872}</Project>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

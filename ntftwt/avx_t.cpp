@@ -1,5 +1,5 @@
-#include "pch.h"
 #include "benchmarks.h"
+#include <iostream>
 #include <immintrin.h>
 #include <chrono>
 
@@ -50,10 +50,10 @@ int32_t avx2_benchmark(size_t iterations) {
 		std::chrono::duration<double, std::milli>(
 			end_avx - start_avx).count();
 
-	printf("AVX2 Benchmark results for %zu iterations:\n", iterations);
-	printf("Scalar: %f ms\n", scalar);
-	printf("AVX2:   %f ms\n", avx);
-	printf("Speedup: %f x\n", scalar / avx);
+	std::cout << "AVX2 Benchmark results for " << iterations << " iterations:\n";
+	std::cout << "Scalar: " << scalar << " ms\n";
+	std::cout << "AVX2:   " << avx << " ms\n";
+	std::cout << "Speedup: " << scalar / avx << "x\n";
 
 	return 0;
 }

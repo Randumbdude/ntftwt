@@ -1,20 +1,15 @@
-#include <cstdio>
+#include <iostream>
 #include "ipc_client.h"
 
 int main() {
-	printf("Klondike IPC client starting...\n");
+	std::cout << "Klondike IPC client starting..." << std::endl;
 	IPCClient ipc;
-	printf("Sending PING...\n");
-	ipc_command cmd{};
-	cmd._cmd_ = command_e::ping;
-	cmd.pid = 0;
-	cmd.text[0] = '\0';
-
-	if (ipc.send(cmd)) {
-		printf("PING sent successfully.\n");
+	std::cout << "Sending PING..." << std::endl;
+	if (ipc.send()) {
+		std::cout << "PING sent successfully." << std::endl;
 	}
 	else {
-		printf("Failed to send PING.\n");
+		std::cout << "Failed to send PING." << std::endl;
 	}
 	return 0;
 }

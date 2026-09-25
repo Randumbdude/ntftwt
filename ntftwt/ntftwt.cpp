@@ -4,7 +4,6 @@
 #ifndef NOMINMAX
 #define NOMINMAX
 #endif
-#include "pch.h"
 #include <iostream>
 #include <Windows.h>
 #include <string>
@@ -33,11 +32,6 @@ int main(int argc, char* argv[]) {
 	// prompt user to run the AVX2 benchmark
 	if (input_yes_no("Would you like to run the AVX2 benchmark?"))
 		if (int32_t i = avx2_benchmark(100000000))
-			return i;
-
-	// prompt user to run the Raylib graphics test
-	if (input_yes_no("Would you like to run the Raylib graphics test?"))
-		if (int32_t i = raylib_test())
 			return i;
 
 	// now we check if the process is parentized

@@ -37,5 +37,8 @@
     <ClInclude Include="ipc_client.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="klondike_ipc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

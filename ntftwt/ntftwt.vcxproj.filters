@@ -24,9 +24,6 @@
     <ClCompile Include="avx_t.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="rayl_t.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ipc_cmd.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -34,9 +31,6 @@
       <Filter>Header Files</Filter>
     </ClCompile>
     <ClCompile Include="ipc_args.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -60,9 +54,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ipc.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

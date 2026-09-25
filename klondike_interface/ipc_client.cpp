@@ -1,25 +1,25 @@
 #include "ipc_client.h"
-#include <cstdio>
+#include <iostream>
 #include <cstring>
 
 bool IPCClient::send(const ipc_command ipc_cmd) {
-	printf("Connecting to IPC pipe...\n");
+	std::cout << "Connecting to IPC pipe..." << std::endl;
 	pipe = CreateFileA(PIPE_NAME, GENERIC_WRITE, 0, nullptr, OPEN_EXISTING, 0, nullptr);
 	if (pipe == INVALID_HANDLE_VALUE)
 	{
-		fprintf(stderr, "Could not connect to IPC pipe.\nIPC Error: %lu\n", GetLastError());
+		std::cerr << "Could not connect to IPC pipe.\n" << "IPC Error: " << GetLastError() << std::endl;
 		return false;
 	}
 	DWORD bytesWritten = 0;
 	BOOL success = WriteFile(pipe, &ipc_cmd, sizeof(ipc_command), &bytesWritten, nullptr);
 	if (!success)
 	{
-		fprintf(stderr, "WriteFile failed: %lu\n", GetLastError());
+		std::cerr << "WriteFile failed: " << GetLastError() << std::endl;
 		CloseHandle(pipe);
 		pipe = INVALID_HANDLE_VALUE;
 		return false;
 	}
-	printf("Struct sent successfully.\nBytes sent: %lu / %zu\n", bytesWritten, sizeof(ipc_command));
+	std::cout << "Struct sent successfully.\n" << "Bytes sent: " << bytesWritten << " / " << sizeof(ipc_command) << std::endl;
 	CloseHandle(pipe);
 	pipe = INVALID_HANDLE_VALUE;
 	return bytesWritten == sizeof(ipc_command);

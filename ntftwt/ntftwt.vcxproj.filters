@@ -55,7 +55,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CopyFileToFolders Include="demo.jl">
+    <CopyFileToFolders Include="benchmark.jl">
       <Filter>Resource Files</Filter>
     </CopyFileToFolders>
   </ItemGroup>

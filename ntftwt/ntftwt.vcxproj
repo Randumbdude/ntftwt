@@ -206,7 +206,7 @@
     <ClInclude Include="sha1.h" />
   </ItemGroup>
   <ItemGroup>
-    <CopyFileToFolders Include="demo.jl">
+    <CopyFileToFolders Include="benchmark.jl">
       <FileType>Document</FileType>
     </CopyFileToFolders>
   </ItemGroup>

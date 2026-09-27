@@ -1,10 +1,9 @@
 #include "ipc_cmd.h"
 #include <windows.h> 
 #include <iostream> 
-#include "exit_codes.h"
+#include "globals.h"
 #include "args.h"
 #include "sha1.h"
-#include "ipc_args.h"
 
 static int32_t execute_command(char* cmd_text) {
 	std::cout << "Executing command: " << cmd_text << std::endl;

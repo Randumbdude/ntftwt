@@ -7,11 +7,13 @@
 #include <iostream>
 #include <Windows.h>
 #include <string>
+#include <julia.h>
 #include "args.h"
 #include "globals.h"
-#include "exit_codes.h"
 #include "benchmarks.h"
 #include "ipc_cmd.h"
+
+JULIA_DEFINE_FAST_TLS // makes code faster
 
 int main(int argc, char* argv[]) {
 
@@ -33,6 +35,15 @@ int main(int argc, char* argv[]) {
 	if (input_yes_no("Would you like to run the AVX2 benchmark?"))
 		if (int32_t i = avx2_benchmark(100000000))
 			return i;
+
+	// julia
+	std::cout << "Initializing Julia..." << std::endl;
+	jl_init();
+	// prompt user to run julia test
+	if (input_yes_no("Would you like to run the embedded Julia benchmark?")) {
+		if (int i = run_julia_benchmark())
+			return i;
+	}
 
 	// now we check if the process is parentized
 	if (is_parentized) {
@@ -57,7 +68,9 @@ int main(int argc, char* argv[]) {
 			send_message(static_cast<command_e>(resp - '0'), message);
 		}
 	}
+
 	// return
+	jl_atexit_hook(0);
 	return EXIT_CODES.SUCCESS;
 }
 

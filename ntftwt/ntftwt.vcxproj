@@ -95,10 +95,13 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>C:\Program Files\Julia-1.13.0\include\julia;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Program Files\Julia-1.13.0\lib;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libjulia.dll.a;libjulia-internal.dll.a;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Manifest>
       <EnableSegmentHeap>true</EnableSegmentHeap>
@@ -113,10 +116,13 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>C:\Program Files\Julia-1.13.0\include\julia;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Program Files\Julia-1.13.0\lib;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libjulia.dll.a;libjulia-internal.dll.a;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Manifest>
       <EnableSegmentHeap>true</EnableSegmentHeap>
@@ -130,13 +136,13 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/arch:AVX2 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files\Julia-1.13.0\include\julia;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files\Julia-1.13.0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libjulia.dll.a;libjulia-internal.dll.a;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Manifest>
       <EnableSegmentHeap>true</EnableSegmentHeap>
@@ -153,34 +159,56 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalOptions>/arch:AVX2 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>C:\Users\myser\source\repos\ntftwt\raylib-master\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files\Julia-1.13.0\include\julia;C:\Users\myser\source\repos\ntftwt\raylib-master\src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\myser\source\repos\ntftwt\raylib-master\build\raylib\Debug</AdditionalLibraryDirectories>
-      <AdditionalDependencies>raylib.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files\Julia-1.13.0\lib;C:\Users\myser\source\repos\ntftwt\raylib-master\build\raylib\Debug</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libjulia.dll.a;libjulia-internal.dll.a;raylib.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Manifest>
       <EnableSegmentHeap>true</EnableSegmentHeap>
     </Manifest>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='launcher|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Program Files\Julia-1.13.0\include\julia;</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>C:\Program Files\Julia-1.13.0\lib;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libjulia.dll.a;libjulia-internal.dll.a;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='launcher|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Program Files\Julia-1.13.0\include\julia;</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>C:\Program Files\Julia-1.13.0\lib;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libjulia.dll.a;libjulia-internal.dll.a;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="args.cpp" />
     <ClCompile Include="avx_t.cpp" />
     <ClCompile Include="ipc_args.cpp" />
-    <ClCompile Include="ipc_args.h" />
     <ClCompile Include="ipc_cmd.cpp" />
+    <ClCompile Include="julia_t.cpp" />
     <ClCompile Include="ntftwt.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="args.h" />
     <ClInclude Include="benchmarks.h" />
     <ClInclude Include="globals.h" />
-    <ClInclude Include="exit_codes.h" />
     <ClInclude Include="ipc.h" />
     <ClInclude Include="ipc_cmd.h" />
     <ClInclude Include="sha1.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="demo.jl">
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

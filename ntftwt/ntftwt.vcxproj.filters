@@ -27,18 +27,15 @@
     <ClCompile Include="ipc_cmd.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ipc_args.h">
-      <Filter>Header Files</Filter>
-    </ClCompile>
     <ClCompile Include="ipc_args.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="julia_t.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="args.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="exit_codes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="globals.h">
@@ -56,5 +53,10 @@
     <ClInclude Include="ipc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="demo.jl">
+      <Filter>Resource Files</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

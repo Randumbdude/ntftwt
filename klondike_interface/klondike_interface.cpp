@@ -5,7 +5,7 @@ int main() {
 	std::cout << "Klondike IPC client starting..." << std::endl;
 	IPCClient ipc;
 	std::cout << "Sending PING..." << std::endl;
-	if (ipc.send()) {
+	if (ipc.send({1, "PING"})) {
 		std::cout << "PING sent successfully." << std::endl;
 	}
 	else {

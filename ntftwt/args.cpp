@@ -7,7 +7,6 @@
 #include <fstream>
 #include <sstream>
 #include <limits>
-#include "exit_codes.h"
 #include "globals.h"
 #include "benchmarks.h"
 

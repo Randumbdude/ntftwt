@@ -1,4 +1,4 @@
-#include "ipc_args.h"
+#include "ipc_cmd.h"
 #include <iostream>
 #include <Windows.h>
 #include "sha1.h"

@@ -21,16 +21,13 @@
     <ClCompile Include="args.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="avx_t.cpp">
+    <ClCompile Include="t_avx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ipc_cmd.cpp">
+    <ClCompile Include="ipc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ipc_args.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="julia_t.cpp">
+    <ClCompile Include="t_julia.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

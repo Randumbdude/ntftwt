@@ -3,7 +3,7 @@
 #include <immintrin.h>
 #include <chrono>
 
-int32_t avx2_benchmark(size_t iterations) {
+int avx2_benchmark(size_t iterations) {
 	float result[8];
 
 	// -------------------------

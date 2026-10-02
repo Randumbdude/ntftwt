@@ -22,12 +22,12 @@ void cleanup() {
 	CloseHandle(process_mutex);
 }
 
-static int32_t input_file_command() {
+static int input_file_command() {
 	std::cout << "Preparing to read input file..." << std::endl;
 	next_input = true;
 	return EXIT_CODES.SUCCESS;
 }
-static int32_t input_file_helper(char* argv) {
+static int input_file_helper(char* argv) {
 	std::cout << "Input file: " << argv << std::endl;
 
 	std::ifstream file(argv);
@@ -120,7 +120,7 @@ static int32_t input_file_helper(char* argv) {
 	return EXIT_CODES.SUCCESS;
 }
 
-static int32_t help_command() {
+static int help_command() {
 	std::cout << "Usage: ntftwt [options]\n";
 	std::cout << "Options:\n";
 	std::cout << "  --help,      Show this help message\n";
@@ -131,13 +131,13 @@ static int32_t help_command() {
 	return EXIT_CODES.SUCCESS;
 }
 
-static int32_t version_command() {
+static int version_command() {
 	std::cout << "ntftwt version: " << VERSION << std::endl;
 	exit(EXIT_CODES.SUCCESS);
 	return EXIT_CODES.SUCCESS;
 }
 
-static int32_t parentize_command() {
+static int parentize_command() {
 
 	// setup mutex for this instance (or try to)
 	process_mutex = CreateMutexA(
@@ -167,12 +167,12 @@ static int32_t parentize_command() {
 	return EXIT_CODES.SUCCESS;
 }
 
-static int32_t castlemania_command() {
+static int castlemania_command() {
 	std::cout << "castlemania has been executed." << std::endl;
 	return EXIT_CODES.SUCCESS;
 }
 
-static int32_t invalid_command() {
+static int invalid_command() {
 	std::cout << "Invalid command. Use --help for usage information." << std::endl;
 	return EXIT_CODES.INVALID_ARGS;
 }
@@ -180,7 +180,7 @@ static int32_t invalid_command() {
 struct command_t
 {
 	const char* name;
-	int32_t(*method)();
+	int(*method)();
 };
 
 command_t commands[] =
@@ -194,7 +194,7 @@ command_t commands[] =
 
 size_t command_count = sizeof(commands) / sizeof(commands[0]);
 
-int32_t handle_args(int argc, char* argv[]) {
+int handle_args(int argc, char* argv[]) {
 	if (argc == 1) {
 		std::cout << "Usage: ntftwt [options]" << std::endl;
 		return EXIT_CODES.NO_ARGS;
@@ -203,7 +203,7 @@ int32_t handle_args(int argc, char* argv[]) {
 	for (int i = 1; i < argc; ++i) {
 		// catch flags: if a previous option indicated the next argv is data (e.g. -i filename)
 		if (next_input) {
-			int32_t res = input_file_helper(argv[i]);
+			int res = input_file_helper(argv[i]);
 			if (res != EXIT_CODES.SUCCESS) {
 				return res;
 			}
@@ -217,7 +217,7 @@ int32_t handle_args(int argc, char* argv[]) {
 			if (strcmp(argv[i], commands[j].name) == 0) {
 				matched = true;
 				//std::cout << std::endl;
-				int32_t res = commands[j].method();
+				int res = commands[j].method();
 				// If this command is an option that expects a following argument (like -i),
 				// don't return immediately; allow the outer loop to process the next argv
 				// which will be handled by the next_input flag. For other commands, return.

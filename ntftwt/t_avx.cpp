@@ -3,6 +3,9 @@
 #include <immintrin.h>
 #include <chrono>
 
+//
+// AVX2 benchmark method
+//
 int avx2_benchmark(size_t iterations) {
 	float result[8];
 

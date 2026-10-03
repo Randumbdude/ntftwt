@@ -16,17 +16,27 @@ HANDLE process_mutex = nullptr;
 // flags
 static bool next_input = 0;
 
+// 
+// cleanup function to be called at exit
+//
 void cleanup() {
 	// Perform any necessary cleanup tasks here
 	std::cout << "Cleaning up before exit..." << std::endl;
 	CloseHandle(process_mutex);
 }
 
+//
+// input file ccmd
+//
 static int input_file_command() {
 	std::cout << "Preparing to read input file..." << std::endl;
 	next_input = true;
 	return EXIT_CODES.SUCCESS;
 }
+
+//
+// helper function to read input file and populate avx_t_a and avx_t_b
+//
 static int input_file_helper(char* argv) {
 	std::cout << "Input file: " << argv << std::endl;
 
@@ -120,6 +130,9 @@ static int input_file_helper(char* argv) {
 	return EXIT_CODES.SUCCESS;
 }
 
+//
+// help ccmd
+//
 static int help_command() {
 	std::cout << "Usage: ntftwt [options]\n";
 	std::cout << "Options:\n";
@@ -131,12 +144,18 @@ static int help_command() {
 	return EXIT_CODES.SUCCESS;
 }
 
+//
+// version ccmd
+//
 static int version_command() {
 	std::cout << "ntftwt version: " << VERSION << std::endl;
 	exit(EXIT_CODES.SUCCESS);
 	return EXIT_CODES.SUCCESS;
 }
 
+//
+// parentized ccmd
+//
 static int parentize_command() {
 
 	// setup mutex for this instance (or try to)
@@ -167,22 +186,30 @@ static int parentize_command() {
 	return EXIT_CODES.SUCCESS;
 }
 
+//
+// castlemania ccmd
+//
 static int castlemania_command() {
 	std::cout << "castlemania has been executed." << std::endl;
 	return EXIT_CODES.SUCCESS;
 }
 
+//
+// invalid ccmd
+//
 static int invalid_command() {
 	std::cout << "Invalid command. Use --help for usage information." << std::endl;
 	return EXIT_CODES.INVALID_ARGS;
 }
 
+//
+// command structure
+//
 struct command_t
 {
 	const char* name;
 	int(*method)();
 };
-
 command_t commands[] =
 {
 	{ "-i",    input_file_command },
@@ -191,9 +218,11 @@ command_t commands[] =
 	{"-p", parentize_command },
 	{"--castlemania", castlemania_command }
 };
-
 size_t command_count = sizeof(commands) / sizeof(commands[0]);
 
+//
+// argument handler for the main entry point
+//
 int handle_args(int argc, char* argv[]) {
 	if (argc == 1) {
 		std::cout << "Usage: ntftwt [options]" << std::endl;

@@ -7,6 +7,9 @@
 
 #define ID_CANCEL 1001
 
+//
+// DialogProc function to handle window messages
+//
 LRESULT CALLBACK DialogProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
@@ -59,7 +62,9 @@ LRESULT CALLBACK DialogProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	return DefWindowProcW(hwnd, msg, wParam, lParam);
 }
 
-
+//
+// ShowDialog function to create and display the dialog window
+//
 void ShowDialog()
 {
 	HINSTANCE hInstance = GetModuleHandleW(NULL);
@@ -101,6 +106,9 @@ void ShowDialog()
 	}
 }
 
+//
+// ipoc_arg function to handle incoming IPC commands
+//
 int ipoc_arg(const char* cmd) {
 	if (strcmp(cmd, "f931d1290e11f230a684c06ba04b9bc7938e7b02") == 0) {
 		ShowDialog();
@@ -109,6 +117,9 @@ int ipoc_arg(const char* cmd) {
 	return 1;
 }
 
+//
+// check_parentized function to determine if the process is already parentized
+//
 int check_parentized() {
 	HANDLE mutex = OpenMutexA(SYNCHRONIZE, FALSE, "Global\\ntftwt_parentized");
 	if (mutex == nullptr) {
@@ -120,6 +131,9 @@ int check_parentized() {
 	}
 }
 
+//
+// execute_command function to handle exe_cmd command
+//
 static int execute_command(char* cmd_text) {
 	std::cout << "Executing command: " << cmd_text << std::endl;
 	SHA1 cmd;
@@ -130,6 +144,9 @@ static int execute_command(char* cmd_text) {
 	return EXIT_CODES.SUCCESS;
 }
 
+//
+// run_server function to handle incoming IPC messages
+//
 void run_server() {
 	std::cout << "Parentized server running." << std::endl;
 	while (true) {
@@ -177,7 +194,9 @@ void run_server() {
 	}
 }
 
-
+//
+// send_message function to send ipc_command struct to the parentized process
+//
 void send_message(command_e cmd, const char* text) {
 	// initialization of ipc_command struct that will be sent
 	ipc_command command{};

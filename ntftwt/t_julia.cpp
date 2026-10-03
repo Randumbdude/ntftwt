@@ -2,7 +2,10 @@
 #include <iostream>
 #include <julia.h>
 
-int32_t run_julia_benchmark() {
+// 
+// Julia benchmark method
+//
+int run_julia_benchmark() {
 	std::cout << "Running Julia benchmark..." << std::endl;
 
 	// Load and execute the Julia script

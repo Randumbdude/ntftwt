@@ -15,12 +15,28 @@
 
 JULIA_DEFINE_FAST_TLS // makes code faster
 
+//
+// method to prompt user for yes/no input (keyboard)
+//
+
+int input_yes_no(const char* prompt) {
+	std::cout << prompt << " (y/n): ";
+	char resp = '\0';
+	std::cin >> resp;
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	return (resp == 'y' || resp == 'Y') ? 1 : 0;
+}
+
+//
+// main entry
+//
+
 int main(int argc, char* argv[]) {
 
 	std::cout << "ntftwt" << std::endl;
 
 	// arguments for main entry point
-	if (int32_t i = handle_args(argc, argv))
+	if (int i = handle_args(argc, argv))
 		return i;
 
 	// check for zvx2 support
@@ -33,7 +49,7 @@ int main(int argc, char* argv[]) {
 
 	// prompt user to run the AVX2 benchmark
 	if (input_yes_no("Would you like to run the AVX2 benchmark?"))
-		if (int32_t i = avx2_benchmark(100000000))
+		if (int i = avx2_benchmark(100000000))
 			return i;
 
 	// julia
@@ -72,14 +88,6 @@ int main(int argc, char* argv[]) {
 	// return
 	jl_atexit_hook(0);
 	return EXIT_CODES.SUCCESS;
-}
-
-int32_t input_yes_no(const char* prompt) {
-	std::cout << prompt << " (y/n): ";
-	char resp = '\0';
-	std::cin >> resp;
-	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-	return (resp == 'y' || resp == 'Y') ? 1 : 0;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

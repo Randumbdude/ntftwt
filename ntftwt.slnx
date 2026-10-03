@@ -4,7 +4,6 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="dbg_ntftwt/dbg_ntftwt.vcxproj" Id="a236bed5-a847-4ccb-a6dc-19515d17bbb9" />
   <Project Path="klondike_interface/klondike_interface.vcxproj" Id="0572b852-d061-4e4d-8566-45d752961c25" />
   <Project Path="ntftwt/ntftwt.vcxproj" Id="c949b14d-8788-4def-98fd-e52694d88188" />
 </Solution>

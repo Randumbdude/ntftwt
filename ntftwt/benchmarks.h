@@ -3,7 +3,7 @@
 
 // Benchmarking functions for AVX2
 inline float avx_t_a[8], avx_t_b[8];
-int32_t avx2_benchmark(size_t iterations);
+int avx2_benchmark(size_t iterations);
 
 // Benchmarking functions for Julia
-int32_t run_julia_benchmark();
+int run_julia_benchmark();
